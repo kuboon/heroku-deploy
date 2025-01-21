@@ -184,13 +184,30 @@ if (heroku.dockerBuildArgs) {
 (async () => {
   // Program logic
   try {
-    // // Just Login
-    // if (heroku.justlogin) {
-    //   execSync(createCatFile(heroku));
-    //   console.log("Created and wrote to ~/.netrc");
+    // Just Login
+    if (heroku.justlogin) {
+      execSync(createCatFile(heroku));
+      console.log("Created and wrote to ~/.netrc");
 
-    //   return;
-    // }
+      return;
+    }
+
+    // Install Heroku CLI if not already installed
+    try {
+      execSync("heroku --version");
+    } catch (err) {
+      installCli();
+    }
+
+    execSync(createCatFile(heroku));
+    console.log("Created and wrote to ~/.netrc");
+
+    // Check login
+    try {
+      execSync("heroku auth:whoami");
+    } catch {
+      console.log("heroku auth failed. Check heroku_api_key is valid")
+    }
 
     execSync(`git config user.name "Heroku-Deploy"`);
     execSync(`git config user.email "${heroku.email}"`);
@@ -214,17 +231,7 @@ if (heroku.dockerBuildArgs) {
       }
     }
 
-    // execSync(createCatFile(heroku));
-    // console.log("Created and wrote to ~/.netrc");
-
     createProcfile(heroku);
-
-    // Install Heroku CLI if not already installed
-    try {
-      execSync("heroku --version");
-    } catch (err) {
-      installCli();
-    }
 
     if (heroku.usedocker) {
       execSync("heroku container:login");
