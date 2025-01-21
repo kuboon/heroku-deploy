@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 env:
   GIT_EMAIL: ${{ vars.GIT_EMAIL }}
@@ -23,7 +23,7 @@ jobs:
           git add -A
           git commit -m "Added data.json"
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@master
+        uses: kuboon/heroku-deploy@main
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -43,7 +43,7 @@ jobs:
       - run: npm run setup tests/test-2/home.html
       - uses: actions/checkout@v4
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@master
+        uses: kuboon/heroku-deploy@main
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -60,7 +60,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm run setup tests/test-3/data.json
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@master
+        uses: kuboon/heroku-deploy@main
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -77,7 +77,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm run setup tests/test-4/data.json
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@master
+        uses: kuboon/heroku-deploy@main
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
