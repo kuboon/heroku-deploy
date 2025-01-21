@@ -3,12 +3,12 @@
 	"entity": {
 		"type": "individual",
 		"role": "owner",
-		"name": "AkhileshNS",
+		"name": "kuboon",
 		"email": "nsakhilesh02@gmail.com",
 		"phone": "",
 		"description": "Heyyo, my name is Akhilesh. I'm a software engineer trying to build useful tools for the community. Most of my work usually revolves around the web but I tend to build towards whatever fascinates me. Please support my work here 🙏. Much appreciated",
 		"webpageUrl": {
-			"url": "https://github.com/AkhileshNS",
+			"url": "https://github.com/kuboon",
 			"wellKnown": ""
 		}
 	},
@@ -18,10 +18,10 @@
 			"name": "Heroku Deploy",
 			"description": "This is a very simple GitHub action that allows you to deploy to Heroku",
 			"webpageUrl": {
-				"url": "https://github.com/AkhileshNS/heroku-deploy"
+				"url": "https://github.com/kuboon/heroku-deploy"
 			},
 			"repositoryUrl": {
-				"url": "https://github.com/AkhileshNS/heroku-deploy",
+				"url": "https://github.com/kuboon/heroku-deploy",
 				"wellKnown": ""
 			},
 			"licenses": [
@@ -40,7 +40,7 @@
 			{
 				"guid": "github",
 				"type": "other",
-				"address": "https://github.com/sponsors/AkhileshNS",
+				"address": "https://github.com/sponsors/kuboon",
 				"description": "You can support me through GitHub Sponsors"
 			}
 		],

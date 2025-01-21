@@ -11,18 +11,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AkhileshNS/heroku-deploy.git"
+    "url": "git+https://github.com/kuboon/heroku-deploy.git"
   },
   "keywords": [
     "heroku",
     "github",
     "github-actions"
   ],
-  "author": "AkhileshNS",
+  "author": "kuboon",
   "bugs": {
-    "url": "https://github.com/AkhileshNS/heroku-deploy/issues"
+    "url": "https://github.com/kuboon/heroku-deploy/issues"
   },
-  "homepage": "https://github.com/AkhileshNS/heroku-deploy#readme",
+  "homepage": "https://github.com/kuboon/heroku-deploy#readme",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
