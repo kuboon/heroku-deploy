@@ -253,13 +253,15 @@ if (heroku.dockerBuildArgs) {
       deploy(heroku);
     }
 
-    if (heroku.healthcheck) {
+    const healthcheckUrl = heroku.healthcheck || execSync("heroku info -s | grep web_url | cut -d= -f2").toString().trim();
+    if (healthcheckUrl) {
       if (typeof heroku.delay === "number" && heroku.delay !== NaN) {
         await sleep(heroku.delay * 1000);
       }
 
       try {
-        const res = await p(heroku.healthcheck);
+        console.log(`Checking health of deployed app at ${healthcheckUrl}`);
+        const res = await p(healthcheckUrl);
         if (res.statusCode !== 200) {
           throw new Error(
             "Status code of network request is not 200: Status code - " +
@@ -276,6 +278,7 @@ if (heroku.dockerBuildArgs) {
       }
     }
 
+    core.setOutput("app_url", healthcheckUrl);
     core.setOutput(
       "status",
       "Successfully deployed heroku app from branch " + heroku.branch
