@@ -6,9 +6,9 @@ const path = require("path");
 
 // Support Functions
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const execSync = (cmd) => {
+const execSync = (cmd, opts = {}) => {
   console.log("Running command: " + cmd);
-  return execSync_(cmd) //, { stdio: ['pipe', 'pipe', process.stdout] })
+  return execSync_(cmd, opts) //, { stdio: ['pipe', 'pipe', process.stdout] })
 };
 const createCatFile = ({ email, api_key }) => `cat >~/.netrc <<EOF
 machine api.heroku.com
@@ -243,17 +243,7 @@ if (heroku.dockerBuildArgs) {
     addRemote(heroku);
     addConfig(heroku);
 
-    try {
-      deploy({ ...heroku, dontuseforce: true });
-    } catch (err) {
-      console.error(`
-            Unable to push branch because the branch is behind the deployed branch. Using --force to deploy branch. 
-            (If you want to avoid this, set dontuseforce to 1 in with: of .github/workflows/action.yml. 
-            Specifically, the error was: ${err}
-        `);
-
-      deploy(heroku);
-    }
+    deploy(heroku);
 
     const appDomain = JSON.parse(execSync("heroku domains -j").toString())[0].hostname;
     const healthcheckUrl = new URL(heroku.healthcheck, `https://${appDomain}`).href;
