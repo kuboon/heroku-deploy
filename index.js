@@ -1,12 +1,15 @@
 const p = require("phin");
 const core = require("@actions/core");
-const { execSync } = require("child_process");
+const { execSync:execSync_ } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
 // Support Functions
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+const execSync = (cmd) => {
+  console.log("Running command: " + cmd);
+  return execSync_(cmd) //, { stdio: ['pipe', 'pipe', process.stdout] })
+};
 const createCatFile = ({ email, api_key }) => `cat >~/.netrc <<EOF
 machine api.heroku.com
     login ${email}
@@ -207,8 +210,8 @@ if (heroku.dockerBuildArgs) {
       }
     }
 
-    execSync(createCatFile(heroku));
-    console.log("Created and wrote to ~/.netrc");
+    // execSync(createCatFile(heroku));
+    // console.log("Created and wrote to ~/.netrc");
 
     createProcfile(heroku);
 
