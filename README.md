@@ -1,11 +1,5 @@
 # Heroku Deploy
 
-[![Join the chat at https://gitter.im/akhileshns-heroku-deploy/community](https://badges.gitter.im/akhileshns-heroku-deploy/community.svg)](https://gitter.im/akhileshns-heroku-deploy/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-![GitHub issues](https://img.shields.io/github/issues/kuboon/heroku-deploy.svg)
-![GitHub](https://img.shields.io/github/license/kuboon/heroku-deploy.svg)
-![Tests](https://github.com/kuboon/heroku-deploy/workflows/Tests/badge.svg)
-
 This is a very simple GitHub action that allows you to deploy to Heroku. The action works by running the following commands in shell via NodeJS:-
 
 ## Table of Contents
@@ -49,7 +43,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -66,7 +60,7 @@ You learn more about GitHub Secrets [here](https://docs.github.com/en/actions/co
 
 ## Important Note
 
-**Please Note**: Git has recently announced that it is planning to switch the default branch's name from "**master**" to "**main**". For this reason, the Action also pushes to the "**main**" branch in the heroku origin by default and if your Heroku App is still using the "**master**" branch, then the Action will automatically switch your Heroku remote to use "**main**" as the default branch. There is **No Action Needed** from you, just keep in mind that this change is occurring as you continue to use the App and if you ever need to manually deploy the App, you can do so using the following command:
+**Please Note**: Git has recently announced that it is planning to switch the default branch's name from "**main**" to "**main**". For this reason, the Action also pushes to the "**main**" branch in the heroku origin by default and if your Heroku App is still using the "**main**" branch, then the Action will automatically switch your Heroku remote to use "**main**" as the default branch. There is **No Action Needed** from you, just keep in mind that this change is occurring as you continue to use the App and if you ever need to manually deploy the App, you can do so using the following command:
 
 ```bash
 git push heroku YOUR_BRANCH:refs/heads/main
@@ -86,7 +80,7 @@ The action comes with additional options that you can use to configure your proj
 | heroku_email                | true     | Email that you use with heroku                                                                                                                                                                      | nsakhilesh02@gmail.com                                |
 | heroku_app_name             | true     | The appname to use for deploying/updating                                                                                                                                                           | demo-rest-api                                         |
 | buildpack                   | false    | An optional buildpack to use when creating the heroku application                                                                                                                                   | https://github.com/heroku/heroku-buildpack-static.git |
-| branch                      | false    | The branch that you would like to deploy to Heroku. Defaults to "HEAD"                                                                                                                              | master, dev, test                                     |
+| branch                      | false    | The branch that you would like to deploy to Heroku. Defaults to "HEAD"                                                                                                                              | main, dev, test                                     |
 | dontautocreate              | false    | Set this to true if you don't want to automatically create the Heroku app                                                                                                                           | true or false                                         |
 | dontuseforce                | false    | Set this to true if you don't want to use --force when switching branches                                                                                                                           | true or false                                         |
 | usedocker                   | false    | Will deploy using Dockerfile in project root                                                                                                                                                        | true or false                                         |
@@ -118,14 +112,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -145,14 +139,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -184,14 +178,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -211,14 +205,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -240,14 +234,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -269,14 +263,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -300,14 +294,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -329,14 +323,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -360,14 +354,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -390,14 +384,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -420,14 +414,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -453,14 +447,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -488,14 +482,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -535,14 +529,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME" #Must be unique in Heroku
@@ -564,14 +558,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15
+      - uses: kuboon/heroku-deploy@v3.15
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "YOUR APP's NAME"
@@ -591,14 +585,14 @@ name: Deploy
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - main # Changing the branch here would also work
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - uses: kuboon/heroku-deploy@v3.15 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ""
@@ -609,15 +603,15 @@ jobs:
 
 ## Important Notes
 
-- You can check this repo's [_.github/workflows/main.yml_](https://github.com/kuboon/heroku-deploy/blob/master/.github/workflows/main.yml) for example use cases of the action in use. Additionally the APIs for these use cases can be found in the [_tests_](https://github.com/kuboon/heroku-deploy/tree/master/tests) folder of the repo
+- You can check this repo's [_.github/workflows/main.yml_](https://github.com/kuboon/heroku-deploy/blob/main/.github/workflows/main.yml) for example use cases of the action in use. Additionally the APIs for these use cases can be found in the [_tests_](https://github.com/kuboon/heroku-deploy/tree/main/tests) folder of the repo
 
 - You can find the secrets tab in your project's settings
 
 - Be careful with your appname, cuz the action either deploys to an existing app or creates a new one if it doesn't exist. So if you accidently change it after deploying it once already, the action won't fail, it'll just create a new dyno and if you are on a paid plan, heroku can be expensive. On that note, always check the logs of your actions to make sure everything is A-OK.
 
-- If you're using the above exact workflow code, keep in mind that it deploys whenever you make a change to the master branch (Even README updates which have nothing to do with application code) and that might not be very efficient for you, have a look through the github actions docs to customize when the action should trigger.
+- If you're using the above exact workflow code, keep in mind that it deploys whenever you make a change to the main branch (Even README updates which have nothing to do with application code) and that might not be very efficient for you, have a look through the github actions docs to customize when the action should trigger.
 
-  (I would recommend making a separate dev branch and setting up the action to trigger upon pull request to the master branch)
+  (I would recommend making a separate dev branch and setting up the action to trigger upon pull request to the main branch)
 
 - By default, if you don't specify a branch in your action, it will default to the HEAD branch (or whichever branch the action is defined under). So you might be wondering what happens if you define the same action in a different branch under the same heroku app name (or which you try to deploy to the same appname from a different branch)? The answer is that the new branch overrides whatever your old branch was (even if the new branch is behind the old branch in terms of commits unless you set dontuseforce to true)
 
