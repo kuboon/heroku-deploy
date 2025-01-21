@@ -253,7 +253,7 @@ if (heroku.dockerBuildArgs) {
       deploy(heroku);
     }
 
-    const healthcheckUrl = heroku.healthcheck || execSync("heroku info -s | grep web_url | cut -d= -f2").toString().trim();
+    const healthcheckUrl = heroku.healthcheck || `https://${JSON.parse(execSync("heroku domains -j").toString())[0].hostname}`;
     if (healthcheckUrl) {
       if (typeof heroku.delay === "number" && heroku.delay !== NaN) {
         await sleep(heroku.delay * 1000);
