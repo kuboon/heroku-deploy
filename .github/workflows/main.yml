@@ -40,8 +40,8 @@ jobs:
     needs: deploy-test-1
     steps:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-2" >> $GITHUB_ENV
+      - run: npm run setup tests/test-2/home.html
       - uses: actions/checkout@v4
-      - run: npm run setup tests/test-2/public_html/index.html
       - id: heroku-deploy
         uses: kuboon/heroku-deploy@master
         with:
@@ -49,7 +49,6 @@ jobs:
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
           heroku_email: ${{ env.HEROKU_EMAIL }}
           appdir: "tests/test-2"
-          buildpack: "https://github.com/heroku/heroku-buildpack-static.git"
           delay: 5
       - run: npm run test-action ${{ steps.heroku-deploy.outputs.app_url }}
 
@@ -60,20 +59,15 @@ jobs:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-1" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - run: npm run setup tests/test-3/data.json
-      - run: |
-          git config --global user.email $GIT_EMAIL
-          git config --global user.name $GIT_NAME
-          git add -A
-          git commit -m "Added data.json"
-      - uses: kuboon/heroku-deploy@master
+      - id: heroku-deploy
+        uses: kuboon/heroku-deploy@master
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
           heroku_email: ${{ env.HEROKU_EMAIL }}
           appdir: "tests/test-3"
           usedocker: true
-          healthcheck: "https://${{env.HEROKU_APP_NAME}}.herokuapp.com/"
-      - run: npm run test-action https://${{env.HEROKU_APP_NAME}}.herokuapp.com/
+      - run: npm run test-action ${{ steps.heroku-deploy.outputs.app_url }}
 
   deploy-test-4:
     runs-on: ubuntu-latest
@@ -82,18 +76,14 @@ jobs:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-2" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - run: npm run setup tests/test-4/data.json
-      - run: |
-          git config --global user.email $GIT_EMAIL
-          git config --global user.name $GIT_NAME
-          git add -A
-          git commit -m "Added data.json"
-      - uses: kuboon/heroku-deploy@master
+      - id: heroku-deploy
+        uses: kuboon/heroku-deploy@master
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
           heroku_email: ${{ env.HEROKU_EMAIL }}
           appdir: "tests/test-4"
-          healthcheck: "https://${{env.HEROKU_APP_NAME}}.herokuapp.com/health"
+          healthcheck: "/health"
           checkstring: "ok"
           procfile: "web: gunicorn index:app"
-      - run: npm run test-action https://${{env.HEROKU_APP_NAME}}.herokuapp.com/
+      - run: npm run test-action ${{ steps.heroku-deploy.outputs.app_url }}

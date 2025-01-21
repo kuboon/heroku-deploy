@@ -213,6 +213,7 @@ if (heroku.dockerBuildArgs) {
     execSync(`git config user.email "${heroku.email}"`);
     const status = execSync("git status --porcelain").toString().trim();
     if (status) {
+      console.log("Changes detected in the working directory.", status);
       execSync(
         'git add -A && git commit -m "Commited changes from previous actions"'
       );
@@ -253,8 +254,9 @@ if (heroku.dockerBuildArgs) {
       deploy(heroku);
     }
 
-    const healthcheckUrl = heroku.healthcheck || `https://${JSON.parse(execSync("heroku domains -j").toString())[0].hostname}`;
-    if (healthcheckUrl) {
+    const appDomain = JSON.parse(execSync("heroku domains -j").toString())[0].hostname;
+    const healthcheckUrl = new URL(heroku.healthcheck, `https://${appDomain}`).href;
+    if (true) {
       if (typeof heroku.delay === "number" && heroku.delay !== NaN) {
         await sleep(heroku.delay * 1000);
       }
