@@ -40,8 +40,8 @@ jobs:
     needs: deploy-test-1
     steps:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-2" >> $GITHUB_ENV
-      - run: npm run setup tests/test-2/home.html
       - uses: actions/checkout@v4
+      - run: npm run setup tests/test-2/home.html
       - id: heroku-deploy
         uses: kuboon/heroku-deploy@main
         with:
