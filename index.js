@@ -130,6 +130,10 @@ const healthcheckFailed = ({
   }
 };
 
+function installCli() {
+  execSync("curl https://cli-assets.heroku.com/install.sh | sh")
+}
+
 // Input Variables
 let heroku = {
   api_key: core.getInput("heroku_api_key"),
@@ -180,13 +184,13 @@ if (heroku.dockerBuildArgs) {
 (async () => {
   // Program logic
   try {
-    // Just Login
-    if (heroku.justlogin) {
-      execSync(createCatFile(heroku));
-      console.log("Created and wrote to ~/.netrc");
+    // // Just Login
+    // if (heroku.justlogin) {
+    //   execSync(createCatFile(heroku));
+    //   console.log("Created and wrote to ~/.netrc");
 
-      return;
-    }
+    //   return;
+    // }
 
     execSync(`git config user.name "Heroku-Deploy"`);
     execSync(`git config user.email "${heroku.email}"`);
@@ -214,6 +218,13 @@ if (heroku.dockerBuildArgs) {
     // console.log("Created and wrote to ~/.netrc");
 
     createProcfile(heroku);
+
+    // Install Heroku CLI if not already installed
+    try {
+      execSync("heroku --version");
+    } catch (err) {
+      installCli();
+    }
 
     if (heroku.usedocker) {
       execSync("heroku container:login");
