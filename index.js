@@ -271,7 +271,7 @@ if (heroku.dockerBuildArgs) {
       }
     }
 
-    core.setOutput("app_url", healthcheckUrl);
+    core.setOutput("app_domain", appDomain);
     core.setOutput(
       "status",
       "Successfully deployed heroku app from branch " + heroku.branch
