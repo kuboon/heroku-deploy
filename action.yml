@@ -1,5 +1,5 @@
-name: "Deploy to Heroku"
-description: "Deploy an app to Heroku"
+name: "Heroku Deploy 2025"
+description: "Deploy an app to Heroku, supports container"
 branding:
   icon: "upload-cloud"
   color: "purple"

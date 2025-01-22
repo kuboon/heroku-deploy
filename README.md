@@ -1,3 +1,7 @@
+![Tests](https://github.com/kuboon/heroku-deploy/workflows/Tests/badge.svg)
+
+This repo is a fork of AkhileshNS's [Deploy to Heroku](https://github.com/marketplace/actions/deploy-to-heroku) action.
+
 # Heroku Deploy
 
 This is a very simple GitHub action that allows you to deploy to Heroku. The action works by running the following commands in shell via NodeJS:-
