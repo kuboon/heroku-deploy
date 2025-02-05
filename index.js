@@ -208,6 +208,7 @@ if (heroku.dockerBuildArgs) {
       execSync("heroku auth:whoami");
     } catch {
       console.log("heroku auth failed. Check heroku_api_key is valid")
+      exit(1)
     }
 
     execSync(`git config user.name "Heroku-Deploy"`);
