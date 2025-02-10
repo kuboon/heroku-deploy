@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Build with ncc
+        run: npm run build
+      - name: Deploy to Heroku
+        uses: kuboon/heroku-deploy@main
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "YOUR_APP_NAME"
+          heroku_email: "YOUR_EMAIL"
