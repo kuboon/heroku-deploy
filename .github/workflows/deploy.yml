@@ -1,0 +1,56 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [test]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  check:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      tag_name: ${{ steps.get_tag.outputs.TAG_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get version from package.json and compare with the latest tag
+        id: get_tag
+        run: |
+          TAG_NAME=$(node -p "require('./package.json').version")
+          if git fetch --depth 1 origin tag $TAG_NAME; then
+            echo "::notice::$TAG_NAME already released."
+            exit 0
+          fi
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_OUTPUT
+
+  build:
+    needs: check
+    if: needs.check.outputs.TAG_NAME
+    env:
+      TAG_NAME: ${{ needs.check.outputs.tag_name }}
+    permissions:
+      contents: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - name: Build with ncc
+        run: |
+          npm run build
+          git stash -a
+      - name: Set repo owner's email and name
+        run: |
+          git config --global user.email ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
+          git config --global user.name ${{ secrets.GITHUB_ACTOR }}
+          git switch latest
+          rm -rf dist/
+          git stash pop
+          git add .
+          git commit -m "release $TAG_NAME"
+          git tag $TAG_NAME
+          git push origin latest --tags
+          gh release create $TAG_NAME -t $TAG_NAME -n "Release $TAG_NAME" --prerelease
