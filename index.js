@@ -70,23 +70,10 @@ const deploy = ({
   dontuseforce,
   app_name,
   branch,
-  usedocker,
-  dockerHerokuProcessType,
-  dockerBuildArgs,
   appdir,
 }) => {
   const force = !dontuseforce ? "--force" : "";
-  if (usedocker) {
-    execSync("heroku stack:set container");
-    execSync(
-      `heroku container:push ${dockerHerokuProcessType} --app ${app_name} ${dockerBuildArgs}`,
-      appdir ? { cwd: appdir } : null
-    );
-    execSync(
-      `heroku container:release ${dockerHerokuProcessType} --app ${app_name}`,
-      appdir ? { cwd: appdir } : null
-    );
-  } else {
+  {
     let remote_branch = execSync(
       "git remote show heroku | grep 'HEAD' | cut -d':' -f2 | sed -e 's/^ *//g' -e 's/ *$//g'"
     )
@@ -108,6 +95,26 @@ const deploy = ({
         { maxBuffer: 104857600 }
       );
     }
+  }
+};
+const deployDocker = ({
+  dontuseforce,
+  app_name,
+  dockerHerokuProcessType,
+  dockerBuildArgs,
+  appdir,
+}) => {
+  const force = !dontuseforce ? "--force" : "";
+  if (true) {
+    execSync("heroku stack:set container");
+    execSync(
+      `heroku container:push ${dockerHerokuProcessType} --app ${app_name} ${dockerBuildArgs}`,
+      appdir ? { cwd: appdir } : null
+    );
+    execSync(
+      `heroku container:release ${dockerHerokuProcessType} --app ${app_name}`,
+      appdir ? { cwd: appdir } : null
+    );
   }
 };
 
@@ -244,7 +251,11 @@ if (heroku.dockerBuildArgs) {
     addRemote(heroku);
     addConfig(heroku);
 
-    deploy(heroku);
+    if (heroku.usedocker) {
+      deployDocker(heroku);
+    } else {
+      deploy(heroku);
+    }
 
     const appDomain = JSON.parse(execSync("heroku domains -j").toString())[0].hostname;
     const healthcheckUrl = new URL(heroku.healthcheck, `https://${appDomain}`).href;
