@@ -27994,7 +27994,7 @@ const execSync = (cmd, opts = {}) => {
   console.log("Running command: " + cmd);
   return (0,child_process__WEBPACK_IMPORTED_MODULE_1__.execSync)(cmd, opts) //, { stdio: ['pipe', 'pipe', process.stdout] })
 };
-const createCatFile = ({ email, api_key }) => `cat >~/.netrc <<EOF
+const createNetrc = ({ email, api_key }) => `cat >~/.netrc <<EOF
 machine api.heroku.com
     login ${email}
     password ${api_key}
@@ -28127,7 +28127,7 @@ function installCli() {
 }
 
 // Input Variables
-let heroku = {
+const heroku = {
   api_key: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("heroku_api_key"),
   email: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("heroku_email"),
   app_name: _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("heroku_app_name"),
@@ -28178,7 +28178,7 @@ if (heroku.dockerBuildArgs) {
   try {
     // Just Login
     if (heroku.justlogin) {
-      execSync(createCatFile(heroku));
+      execSync(createNetrc(heroku));
       console.log("Created and wrote to ~/.netrc");
 
       return;
@@ -28191,7 +28191,7 @@ if (heroku.dockerBuildArgs) {
       installCli();
     }
 
-    execSync(createCatFile(heroku));
+    execSync(createNetrc(heroku));
     console.log("Created and wrote to ~/.netrc");
 
     // Check login
