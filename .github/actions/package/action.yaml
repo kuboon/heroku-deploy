@@ -3,6 +3,7 @@ runs:
   using: "Composite"
   steps:
   - name: Prepare a package
+    shell: bash
     run: |
       npm install
       npm run build
