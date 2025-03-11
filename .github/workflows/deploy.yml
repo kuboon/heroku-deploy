@@ -1,6 +1,8 @@
 name: Deploy
 
 on:
+  pull_request:
+    branches: [main]
   workflow_run:
     workflows: [Tests]
     types: [completed]
@@ -8,7 +10,6 @@ on:
 
 jobs:
   check:
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,6 +46,8 @@ jobs:
       - name: Create a release
         run: |
           cd ../latest
+          ls
+          ls dist
           git add .
           git commit -m "release $TAG_NAME"
           git tag $TAG_NAME
