@@ -9,7 +9,7 @@ const execSync = (cmd, opts = {}) => {
   console.log("Running command: " + cmd);
   return execSync_(cmd, opts) //, { stdio: ['pipe', 'pipe', process.stdout] })
 };
-const createCatFile = ({ email, api_key }) => `cat >~/.netrc <<EOF
+const createNetrc = ({ email, api_key }) => `cat >~/.netrc <<EOF
 machine api.heroku.com
     login ${email}
     password ${api_key}
@@ -142,7 +142,7 @@ function installCli() {
 }
 
 // Input Variables
-let heroku = {
+const heroku = {
   api_key: core.getInput("heroku_api_key"),
   email: core.getInput("heroku_email"),
   app_name: core.getInput("heroku_app_name"),
@@ -193,7 +193,7 @@ if (heroku.dockerBuildArgs) {
   try {
     // Just Login
     if (heroku.justlogin) {
-      execSync(createCatFile(heroku));
+      execSync(createNetrc(heroku));
       console.log("Created and wrote to ~/.netrc");
 
       return;
@@ -206,7 +206,7 @@ if (heroku.dockerBuildArgs) {
       installCli();
     }
 
-    execSync(createCatFile(heroku));
+    execSync(createNetrc(heroku));
     console.log("Created and wrote to ~/.netrc");
 
     // Check login
