@@ -23,7 +23,7 @@ jobs:
       - name: Get version from package.json and compare with the latest tag
         id: get_tag
         run: |
-          TAG_NAME=$(node -p "require('./package.json').version")
+          TAG_NAME=v$(node -p "require('./package.json').version")
           if git fetch --depth 1 origin tag $TAG_NAME; then
             echo "::notice::$TAG_NAME already released."
             exit 0
