@@ -3,8 +3,18 @@ name: Tests
 on:
   pull_request:
     branches: [main]
+    paths:
+      - '**.js'
+      - '**.ts'
   push:
     branches: [main]
+    paths:
+    - '**.js'
+    - '**.ts'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   HEROKU_EMAIL: ${{ vars.HEROKU_EMAIL }}

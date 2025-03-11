@@ -6,6 +6,10 @@ on:
     types: [completed]
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
@@ -49,4 +53,6 @@ jobs:
           git commit -m "release $TAG_NAME"
           git tag $TAG_NAME
           git push origin latest --tags
-          gh release create $TAG_NAME -t $TAG_NAME -n "Release $TAG_NAME" --prerelease
+          gh release create $TAG_NAME -t $TAG_NAME -n "Release $TAG_NAME"
+        env:
+          GH_TOKEN: ${{ github.token }}
