@@ -7,7 +7,7 @@ runs:
     run: |
       npm install
       npm run build
-      git worktree add latest
-      cp -r dist/ latest/
-      cp action.yml latest/
-      cp package.json latest/
+      git worktree add ../latest
+      cp -r dist/ ../latest/
+      cp action.yml ../latest/
+      cp package.json ../latest/
