@@ -1,4 +1,3 @@
-import p from "phin";
 import * as core from "@actions/core";
 import { execSync as execSync_ } from "child_process";
 import fs from "fs";
@@ -266,17 +265,18 @@ if (heroku.dockerBuildArgs) {
 
       try {
         console.log(`Checking health of deployed app at ${healthcheckUrl}`);
-        const res = await p(healthcheckUrl);
-        if (res.statusCode !== 200) {
+        const res = await fetch(healthcheckUrl);
+        if (res.status !== 200) {
           throw new Error(
             "Status code of network request is not 200: Status code - " +
-              res.statusCode
+              res.status
           );
         }
-        if (heroku.checkstring && heroku.checkstring !== res.body.toString()) {
+        const text = await res.text();
+        if (heroku.checkstring && heroku.checkstring !== text) {
           throw new Error("Failed to match the checkstring");
         }
-        console.log(res.body.toString());
+        console.log(text);
       } catch (err) {
         console.log(err.message);
         healthcheckFailed(heroku);
