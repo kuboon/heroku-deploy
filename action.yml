@@ -90,4 +90,4 @@ outputs:
     description: "The Success/Failure of the action"
 runs:
   using: "node20"
-  main: "index.js"
+  main: "dist/index.js"
