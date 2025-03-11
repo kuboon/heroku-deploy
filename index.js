@@ -1,8 +1,8 @@
-const p = require("phin");
-const core = require("@actions/core");
-const { execSync:execSync_ } = require("child_process");
-const fs = require("fs");
-const path = require("path");
+import p from "phin";
+import * as core from "@actions/core";
+import { execSync as execSync_ } from "child_process";
+import fs from "fs";
+import path from "path";
 
 // Support Functions
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
