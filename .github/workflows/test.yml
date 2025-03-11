@@ -3,8 +3,14 @@ name: Tests
 on:
   pull_request:
     branches: [main]
+    paths:
+      - '**.js'
+      - '**.ts'
   push:
     branches: [main]
+    paths:
+    - '**.js'
+    - '**.ts'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
