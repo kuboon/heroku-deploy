@@ -16,14 +16,15 @@ jobs:
     steps:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-1" >> $GITHUB_ENV
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/package
       - run: npm run setup tests/test-1/data.json
       - run: |
-          git config --global user.email $GIT_EMAIL
-          git config --global user.name $GIT_NAME
+          git config --global user.email ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
+          git config --global user.name ${{ secrets.GITHUB_ACTOR }}
           git add -A
           git commit -m "Added data.json"
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@main
+        uses: ./latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -41,9 +42,10 @@ jobs:
     steps:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-2" >> $GITHUB_ENV
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/package
       - run: npm run setup tests/test-2/home.html
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@main
+        uses: ./latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -58,9 +60,10 @@ jobs:
     steps:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-3" >> $GITHUB_ENV
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/package
       - run: npm run setup tests/test-3/data.json
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@main
+        uses: ./latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -75,9 +78,10 @@ jobs:
     steps:
       - run: echo "HEROKU_APP_NAME=${{ env.HEROKU_PROJ_PREFIX }}-1" >> $GITHUB_ENV
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/package
       - run: npm run setup tests/test-4/data.json
       - id: heroku-deploy
-        uses: kuboon/heroku-deploy@main
+        uses: ./latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
