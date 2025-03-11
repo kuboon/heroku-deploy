@@ -24,7 +24,7 @@ jobs:
           git add -A
           git commit -m "Added data.json"
       - id: heroku-deploy
-        uses: ../latest
+        uses: ./../latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -45,7 +45,7 @@ jobs:
       - uses: ./.github/actions/package
       - run: npm run setup tests/test-2/home.html
       - id: heroku-deploy
-        uses: ../latest
+        uses: ./../latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -63,7 +63,7 @@ jobs:
       - uses: ./.github/actions/package
       - run: npm run setup tests/test-3/data.json
       - id: heroku-deploy
-        uses: ../latest
+        uses: ./../latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
@@ -81,7 +81,7 @@ jobs:
       - uses: ./.github/actions/package
       - run: npm run setup tests/test-4/data.json
       - id: heroku-deploy
-        uses: ../latest
+        uses: ./../latest
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ env.HEROKU_APP_NAME }}
