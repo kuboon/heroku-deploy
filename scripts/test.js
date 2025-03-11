@@ -1,6 +1,4 @@
-const p = require("phin");
-
 (async () => {
-  const res = await p("https://kuboon-deploy-test-1.herokuapp.com/");
-  console.log(res.statusCode === 200);
+  const res = await fetch("https://kuboon-deploy-test-1.herokuapp.com/");
+  console.log(res.status === 200);
 })();

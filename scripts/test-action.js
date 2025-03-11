@@ -1,11 +1,10 @@
 const core = require("@actions/core");
-const p = require("phin");
 
 setTimeout(() => {
   (async () => {
     try {
-      const res = await p(process.argv[2]);
-      const data = JSON.parse(res.body);
+      const res = await fetch(process.argv[2]);
+      const data = await res.json();
 
       if (
         data.GITHUB_RUN_ID === process.env.GITHUB_RUN_ID &&
