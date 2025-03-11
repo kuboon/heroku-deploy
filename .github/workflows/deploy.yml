@@ -57,3 +57,5 @@ jobs:
           git tag $TAG_NAME
           git push origin latest --tags
           gh release create $TAG_NAME -t $TAG_NAME -n "Release $TAG_NAME" --prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
